@@ -1,0 +1,74 @@
+# pretrain
+save_pretrain: true
+load_pretrain: false
+# XXXX_2
+XXXX_12: 1
+XXXX_13: false
+XXXX_10: False
+user_low_dim: 200
+sample_nlist: 10
+centroids_num: 1
+sample_num: 10
+sample_mask_score: 0.6
+rec_mask_score: 0.6
+XXXX_11: true
+test_neg_sample: true
+k_popular: 1024
+ep_model_tag: nrcrs
+focal_gamma: 2
+# dataset
+dataset: ReDial
+tokenize:
+  rec: nltk
+# dataloader
+context_truncate: 1024
+response_truncate: 30
+scale: 1
+# model
+rec_model: NRCRS_Model
+token_emb_dim: 300
+kg_emb_dim: 128
+num_bases: 8
+n_heads: 2
+n_layers: 2
+ffn_size: 300
+dropout: 0.1
+attention_dropout: 0.0
+relu_dropout: 0.1
+learn_positional_embeddings: false
+embeddings_scale: true
+reduction: false
+n_positions: 1024
+# optim
+pretrain:
+  epoch: 50
+  batch_size: 256
+  optimizer:
+    name: Adam
+    lr: !!float 1e-3
+  lr_bert: !!float 1e-5
+rec:
+  epoch: 50
+  batch_size: 64
+  optimizer:
+    name: Adam
+    lr: !!float 1e-3
+  lr_scheduler:
+    name: ReduceLROnPlateau
+    patience: 2
+    factor: 0.5
+  lr_bert: !!float 1e-5
+  early_stop: True
+  stop_mode: max
+  impatience: 3
+conv:
+  epoch: 100
+  batch_size: 256
+  optimizer:
+    name: Adam
+    lr: !!float 1e-3
+  lr_scheduler:
+    name: ReduceLROnPlateau
+    patience: 3
+    factor: 0.5
+  gradient_clip: 0.1
